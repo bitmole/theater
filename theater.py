@@ -33,6 +33,33 @@ def attendance_at(price):
     """
     return 120 + diff_attendance(price)
 
+def cost_at(price):
+    """Calculates theater operating cost at given ticket price
+
+    :price: ticket price
+    :returns: cost of performance
+
+    """
+    return 180 + 0.04 * attendance_at(price)
+
+def revenue_at(price):
+    """ Calculates revenue at given price
+
+    :price: ticket price
+    :returns: revenue
+
+    """
+    return price * attendance_at(price)
+
+def profit_at(price):
+    """Caclulates profit at given price
+
+    :price: ticket price
+    :returns: profit
+
+    """
+    return revenue_at(price) - cost_at(price)
+
 def diff_attendance(price):
     """Calculates difference in attendence at given price
         according to following function:
@@ -60,6 +87,29 @@ def diff_price(price):
     diff_cents = round(price * 100)
     return 500 - diff_cents
 
+
 assert attendance_at(5.00) == 120
 assert attendance_at(5.10) == 105
 assert attendance_at(4.90) == 135
+assert cost_at(5.00) == 184.80
+assert revenue_at(5.00) == 600.00 
+assert profit_at(5.00) == 415.20
+
+def main():
+    current_price, max_price = 1.00, 6.00
+    profits = []
+
+    while current_price <= max_price:
+        profits.append((current_price, profit_at(current_price)))
+        current_price += 0.10
+
+    max_profit = (0, 0)
+    for price, profit in profits:
+        if profit > max_profit[1]:
+            max_profit = (price, profit) 
+        print('$%.2f: $%.2f' % (price, profit))
+
+    print('Maximum profit: $%.2f: $%.2f' % (max_profit[0], max_profit[1]))
+
+if __name__ == "__main__":
+    main()
