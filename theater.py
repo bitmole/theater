@@ -62,20 +62,20 @@ def profit_at(price):
 
 def diff_attendance(price):
     """Calculates difference in attendence at given price
-        according to following function:
+        according to following data points:
 
-        diff_price      | 10 | 20 | 30 | 40
-        diff_attendance | 15 | 30 | 45 | 60
+        diff_price      | 10 | 20 | 30 | 40 | ...
+        diff_attendance | 15 | 30 | 45 | 60 | ...
+
+        This denotes linear f(x) = 1.5x
+                                 = 15(x / 10)
         
-        This denotes linear f(x) = 1.5.x
-                            f(x) = 3/2 x
-                            f(x) = (3 * x) / 2
 
     :price: ticket price
     :returns: difference in attendance as compared to attendance at base price
 
     """
-    return (3 * diff_price(price)) // 2
+    return (diff_price(price) / 10) * 15
 
 def diff_price(price):
     """
@@ -84,18 +84,19 @@ def diff_price(price):
     :price: ticket price
     :returns: price difference *in cents*
     """
-    diff_cents = round(price * 100)
-    return 500 - diff_cents
+    price = round(price * 100)
+    return 500 - price
 
+def test():
+    assert attendance_at(5.00) == 120
+    assert attendance_at(5.10) == 105
+    assert attendance_at(4.90) == 135
+    assert cost_at(5.00) == 184.80
+    assert revenue_at(5.00) == 600.00 
+    assert profit_at(5.00) == 415.20
+    print('ok')
 
-assert attendance_at(5.00) == 120
-assert attendance_at(5.10) == 105
-assert attendance_at(4.90) == 135
-assert cost_at(5.00) == 184.80
-assert revenue_at(5.00) == 600.00 
-assert profit_at(5.00) == 415.20
-
-def main():
+def print_table():
     current_price, max_price = 1.00, 6.00
     profits = []
 
@@ -112,4 +113,5 @@ def main():
     print('Maximum profit: $%.2f: $%.2f' % (max_profit[0], max_profit[1]))
 
 if __name__ == "__main__":
-    main()
+    test()
+    print_table()
